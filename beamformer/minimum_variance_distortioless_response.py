@@ -8,6 +8,7 @@ import numpy as np
 from scipy.fftpack import fft
 from . import util
 
+
 class minimum_variance_distortioless_response:
     
     def __init__(self,
@@ -31,7 +32,7 @@ class minimum_variance_distortioless_response:
         look_direction = look_direction * (-1)
         for f, frequency in enumerate(frequency_vector):
             for m, mic_angle in enumerate(self.mic_angle_vector):
-                steering_vector[f, m] = np.complex(np.exp(( - 1j) * ((2 * np.pi * frequency) / self.sound_speed) \
+                steering_vector[f, m] = np.complex(np.exp((- 1j) * ((2 * np.pi * frequency) / self.sound_speed) \
                                * (self.mic_diameter / 2) \
                                * np.cos(np.deg2rad(look_direction) - np.deg2rad(mic_angle))))
         steering_vector = np.conjugate(steering_vector).T
@@ -98,7 +99,8 @@ class minimum_variance_distortioless_response:
             a = np.matmul(np.conjugate(steering_vector[:, f]).T, inv_R)
             b = np.matmul(a, steering_vector[:, f])
             b = np.reshape(b, [1, 1])
-            beamformer[:, f] = np.matmul(inv_R, steering_vector[:, f]) / b # number_of_mic *1   = number_of_mic *1 vector/scalar        
+            beamformer[:, f] = \
+                np.matmul(inv_R, steering_vector[:, f]) / b  # number_of_mic *1   = number_of_mic *1 vector/scalar
         return beamformer
     
     def apply_beamformer(self, beamformer, complex_spectrum):
@@ -106,4 +108,5 @@ class minimum_variance_distortioless_response:
         enhanced_spectrum = np.zeros((number_of_frames, number_of_bins), dtype=np.complex64)
         for f in range(0, number_of_bins):
             enhanced_spectrum[:, f] = np.matmul(np.conjugate(beamformer[:, f]).T, complex_spectrum[:, :, f])
-        return util.spec2wav(enhanced_spectrum, self.sampling_frequency, self.fft_length, self.fft_length, self.fft_shift)        
+        return util.spec2wav(enhanced_spectrum, self.sampling_frequency,
+                             self.fft_length, self.fft_length, self.fft_shift)

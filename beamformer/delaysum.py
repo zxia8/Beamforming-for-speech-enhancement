@@ -43,4 +43,4 @@ class delaysum:
         enhanced_spectrum = np.zeros((number_of_frames, number_of_bins), dtype=np.complex64)
         for f in range(0, number_of_bins):
             enhanced_spectrum[:, f] = np.matmul(np.conjugate(beamformer[:, f]).T, complex_spectrum[:, :, f])
-        return util.spec2wav(enhanced_spectrum, self.sampling_frequency, self.fft_length, self.fft_length, self.fft_shift)       
+        return util.spec2wav(enhanced_spectrum, self.sampling_frequency, self.fft_length, self.fft_length, self.fft_shift)

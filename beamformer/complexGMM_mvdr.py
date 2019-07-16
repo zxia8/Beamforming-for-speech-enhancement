@@ -126,7 +126,8 @@ class complexGMM_mvdr:
                 R_n[:, :, f] = R_n[:, :, f] + lambda_noise[t, f] * yyh[:, :, t, f]
             R_n[:, :, f] = R_n[:, :, f] / np.sum(lambda_noise[:, f], dtype=np.complex64)    
         R_x = R_xn - R_n
-        return (complex_spectrum, R_x, R_n, lambda_noise, lambda_noisy)        
+        return (complex_spectrum, R_x, R_n, lambda_noise, lambda_noisy)
+
                         
     def get_mvdr_beamformer(self, R_x, R_n):
         number_of_channels, _, number_of_bins = np.shape(R_x)
