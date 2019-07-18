@@ -5,8 +5,8 @@ Created on Tue Jan 15 11:49:02 2019
 @author: a-kojima
 """
 import numpy as np
-import soundfile as sf
-import matplotlib.pyplot as pl
+# import soundfile as sf
+from scipy.io import wavfile as wf
 from beamformer import complexGMM_mvdr as cgmm
 import sys
 import os
@@ -16,8 +16,10 @@ FFT_LENGTH = 512
 FFT_SHIFT = 128
 NUMBER_EM_ITERATION = 20
 MIN_SEGMENT_DUR = 2
-SOURCE_PATH = sys.argv[1]
-ENHANCED_PATH = sys.argv[2]
+SOURCE_PATH = "./../../sample_data/dev"
+ENHANCED_PATH = "./../../"
+# SOURCE_PATH = sys.argv[1]
+# ENHANCED_PATH = sys.argv[2]
 IS_MASK_PLOT = False
 
 
@@ -55,11 +57,13 @@ def naming(c_list):
 
 
 def multi_channel_read(list):
-    wav, _ = sf.read(list[0], dtype='float32')
+    # wav, _ = sf.read(list[0], dtype='float32')
+    _, wav = wf.read(list[0])
     wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
     wav_multi[:, 0] = wav
     for i in range(4):
-        wav_multi[:, i] = sf.read(list[i])[0]
+        # wav_multi[:, i] = sf.read(list[i])[0]
+        wav_multi[:, i] = wf.read(list[i])[1]
     return wav_multi
 
 
@@ -84,7 +88,8 @@ for i in range(len(data)):
 
         enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum)
 
-        sf.write(ENHANCED_PATH + '/' + naming(char_list), enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
+        # sf.write(ENHANCED_PATH + '/' + naming(char_list), enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
+        wf.write(ENHANCED_PATH + '/' + naming(char_list), SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
 
 # if IS_MASK_PLOT:
 #     pl.figure()
