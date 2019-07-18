@@ -9,7 +9,9 @@ import numpy as np
 from scipy.io import wavfile as wf
 from beamformer import complexGMM_mvdr as cgmm
 import sys
-import os
+import warnings
+
+warnings.filterwarnings('ignore')
 
 SAMPLING_FREQUENCY = 16000
 FFT_LENGTH = 512
@@ -68,9 +70,19 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     _, wav = wf.read(list[0])
     wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
     wav_multi[:, 0] = wav
-    for i in range(4):
-        # wav_multi[:, i] = sf.read(list[i])[0]
-        wav_multi[:, i] = wf.read(list[i])[1]
+
+    _, wav = wf.read(list[1])
+    wav_multi[:, 1] = wav
+
+    _, wav = wf.read(list[2])
+    wav_multi[:, 2] = wav
+
+    _, wav = wf.read(list[0])
+    wav_multi[:, 3] = wav
+    # for i in range(4):
+    #     # wav_multi[:, i] = sf.read(list[i])[0]
+    #     wav_multi[:, i] = wf.read(list[i])[1]
+    print("read success")
     return wav_multi
 
 

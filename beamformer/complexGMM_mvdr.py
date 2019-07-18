@@ -29,6 +29,7 @@ class complexGMM_mvdr:
         self.beamformer_inv_threshold=beamformer_inv_threshold
         
     def get_spatial_correlation_matrix(self, speech_data):
+        print("---m1---")
         complex_spectrum, _ = util.get_3dim_spectrum_from_data(speech_data, self.fft_length, self.fft_shift, self.fft_length)
         number_of_channels, number_of_frames, number_of_bins = np.shape(complex_spectrum)
         
