@@ -16,10 +16,10 @@ FFT_LENGTH = 512
 FFT_SHIFT = 128
 NUMBER_EM_ITERATION = 20
 MIN_SEGMENT_DUR = 2
-SOURCE_PATH = "./../../sample_data/dev"
-ENHANCED_PATH = "./../../"
-# SOURCE_PATH = sys.argv[1]
-# ENHANCED_PATH = sys.argv[2]
+# SOURCE_PATH = "./../../sample_data/dev"
+# ENHANCED_PATH = "./../../"
+SOURCE_PATH = sys.argv[1]
+ENHANCED_PATH = sys.argv[2]
 IS_MASK_PLOT = False
 
 
