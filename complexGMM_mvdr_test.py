@@ -68,14 +68,21 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     _, wav = wf.read(list[0])
     wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
     wav_multi[:, 0] = wav
+    print("column 1 done")
 
     _, wav1 = wf.read(list[1])
+    print("wav 2 done")
+
     wav_multi[:, 1] = wav1
+    print("column 2 done")
 
     _, wav2 = wf.read(list[2])
+    print("wav 3 done")
     wav_multi[:, 2] = wav2
+    print("column 3 done")
 
     _, wav3 = wf.read(list[3])
+    print("wav 4 done")
     wav_multi[:, 3] = wav3
     print("read done")
     return wav_multi
