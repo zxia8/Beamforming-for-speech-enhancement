@@ -63,7 +63,7 @@ def file_dict(input_arrays):
 def multi_channel_read(list, path):  # list: file_dict[key]
     for i in range(len(list)):
         list[i] = path + '/' + list[i]
-    print(list)
+
     # wav, _ = sf.read(list[0], dtype='float32')
     _, wav = wf.read(list[0])
     wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
@@ -78,20 +78,20 @@ inp = file_dict(INPUT_ARRAYS)
 
 
 for key in inp:
-
+    print(1)
     multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
-
+    print(2)
     cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION, MIN_SEGMENT_DUR)
-
+    print(3)
     complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(multi_channels_data)
-
+    print(4)
     beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
-
+    print(5)
     enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum)
-
+    print(6)
     # sf.write(ENHANCED_PATH + '/' + naming(char_list), enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
     wf.write(ENHANCED_PATH + '/' + key, SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
-
+    print(7)
 # if IS_MASK_PLOT:
 #     pl.figure()
 #     pl.subplot(2, 1, 1)
