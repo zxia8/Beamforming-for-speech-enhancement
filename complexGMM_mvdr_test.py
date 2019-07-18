@@ -16,47 +16,54 @@ FFT_LENGTH = 512
 FFT_SHIFT = 128
 NUMBER_EM_ITERATION = 20
 MIN_SEGMENT_DUR = 2
+# INPUT_ARRAYS = "./../../channels_4"
 # SOURCE_PATH = "./../../sample_data/dev"
 # ENHANCED_PATH = "./../../"
-SOURCE_PATH = sys.argv[1]
-ENHANCED_PATH = sys.argv[2]
-IS_MASK_PLOT = False
+INPUT_ARRAYS = sys.argv[1]
+SOURCE_PATH = sys.argv[2]
+ENHANCED_PATH = sys.argv[3]
+
+# IS_MASK_PLOT = False
 
 
-def file_list():
-    path = SOURCE_PATH
-    path_list = os.listdir(path)
-    f_list = []
-    p_list = []
-    for filename in path_list:
-        p_list.append(path + '/' + filename)
-        f_list.append(filename)
-    p_list.sort()
-    f_list.sort()
+def file_dict(input_arrays):
 
-    return p_list, f_list
+    file_dic = {}
+    with open(input_arrays, 'r') as f:
+        file_group = f.read().split("\n")
+    f.close()
+    file_group.remove('')
 
+    for file in file_group:
+        a = file.split()
+        file_dic[a.pop(0)] = a
 
-def separate_into_4s(list):
-    data_store = []
-    vehicle = []
-    while len(list) != 0:
-        for i in range(4):
-            vehicle.append(list.pop(0))
-        data_store.append(vehicle)
-        vehicle = []
-    return data_store
+    return file_dic
 
 
-def naming(c_list):
-    name = ''
-    for i in range(7):
-        name += c_list[i]
-    name += '.wav'
-    return name
+# def separate_into_4s(list):
+#     data_store = []
+#     vehicle = []
+#     while len(list) != 0:
+#         for i in range(4):
+#             vehicle.append(list.pop(0))
+#         data_store.append(vehicle)
+#         vehicle = []
+#     return data_store
+#
+#
+# def naming(c_list):
+#     name = ''
+#     for i in range(7):
+#         name += c_list[i]
+#     name += '.wav'
+#     return name
 
 
-def multi_channel_read(list):
+def multi_channel_read(list, path):  # list: file_dict[key]
+    for i in range(len(list)):
+        list[i] = path + '/' + list[i]
+    print(list)
     # wav, _ = sf.read(list[0], dtype='float32')
     _, wav = wf.read(list[0])
     wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
@@ -67,29 +74,23 @@ def multi_channel_read(list):
     return wav_multi
 
 
-flist, name = file_list()
+inp = file_dict(INPUT_ARRAYS)
 
-data = separate_into_4s(flist)
-names = separate_into_4s(name)
-print()
-for i in range(len(data)):
-    char_list = []
-    for char in names[i][0]:
-        char_list.append(char)
-    if len(char_list) == 15:
 
-        multi_channels_data = multi_channel_read(data[i])
+for key in inp:
 
-        cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION, MIN_SEGMENT_DUR)
+    multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
 
-        complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(multi_channels_data)
+    cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION, MIN_SEGMENT_DUR)
 
-        beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
+    complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(multi_channels_data)
 
-        enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum)
+    beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
 
-        # sf.write(ENHANCED_PATH + '/' + naming(char_list), enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
-        wf.write(ENHANCED_PATH + '/' + naming(char_list), SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
+    enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum)
+
+    # sf.write(ENHANCED_PATH + '/' + naming(char_list), enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
+    wf.write(ENHANCED_PATH + '/' + key, SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
 
 # if IS_MASK_PLOT:
 #     pl.figure()
