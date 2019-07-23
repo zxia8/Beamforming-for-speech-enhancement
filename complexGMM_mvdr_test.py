@@ -117,7 +117,7 @@ if __name__ == '__main__':
     # INPUT_ARRAYS = "./../../channels_4"
     # SOURCE_PATH = "./../../sample_data/eval"
     # ENHANCED_PATH = "./../../"
-    # LINE = 1
+    # LINE = 2
 
     INPUT_ARRAYS = sys.argv[1]
     SOURCE_PATH = sys.argv[2]
