@@ -41,7 +41,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     wav_multi[:, 3] = wav3
     print("read done")
 
-    wav_multi = np.array_split(wav_multi, 1)
+    wav_multi = np.array_split(wav_multi, 50)
     return wav_multi
 
 
