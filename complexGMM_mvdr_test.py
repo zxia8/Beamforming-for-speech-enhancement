@@ -41,7 +41,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     wav_multi[:, 3] = wav3
     print("read done")
 
-    wav_multi = np.array_split(wav_multi, 5000)
+    wav_multi = np.array_split(wav_multi, 100)
     return wav_multi
 
 
@@ -65,33 +65,35 @@ def file_dict(input_arrays):
 def main():
 
     inp = file_dict(INPUT_ARRAYS)
-    print(inp)
+    a = list(inp.keys())
+    key = a[LINE-1]
     enhanced_speech = []
+    print(inp[key])
 
-    for key in inp:
-        multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
-        print("data reading done")
 
-        cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
-                                               MIN_SEGMENT_DUR)
-        print("init done")
-        for i in range(len(multi_channels_data)):
-            complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(
-                multi_channels_data[i])
-            print("mask estimation done")
+    multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
+    print("data reading done")
 
-            beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
-            print("beamforming done")
+    cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
+                                           MIN_SEGMENT_DUR)
+    print("init done")
+    for i in range(len(multi_channels_data)):
+        complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(
+            multi_channels_data[i])
+        print("mask estimation done")
 
-            enhanced_speech.extend(cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum))
-            print("enhancing done")
+        beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
+        print("beamforming done")
 
-            # sf.write(ENHANCED_PATH + '/' + naming(char_list),
-            # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
+        enhanced_speech.extend(cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum))
+        print("enhancing done")
 
-        wf.write(ENHANCED_PATH + '/' + key + ".wav",
-                     SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
-        print("output done")
+        # sf.write(ENHANCED_PATH + '/' + naming(char_list),
+        # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
+
+    wf.write(ENHANCED_PATH + '/' + key + ".wav",
+                 SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
+    print("output done")
     print("all done")
 
     # if IS_MASK_PLOT:
@@ -111,12 +113,16 @@ if __name__ == '__main__':
     FFT_SHIFT = 128
     NUMBER_EM_ITERATION = 20
     MIN_SEGMENT_DUR = 2
+
     # INPUT_ARRAYS = "./../../channels_4"
-    # SOURCE_PATH = "./../../sample_data/dev"
+    # SOURCE_PATH = "./../../sample_data/eval"
     # ENHANCED_PATH = "./../../"
+    # LINE = 1
+
     INPUT_ARRAYS = sys.argv[1]
     SOURCE_PATH = sys.argv[2]
     ENHANCED_PATH = sys.argv[3]
+    LINE = sys.argv[4]
 
     # IS_MASK_PLOT = False
 
