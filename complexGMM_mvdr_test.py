@@ -41,7 +41,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     wav_multi[:, 3] = wav3
     print("read done")
 
-    wav_multi = np.array_split(wav_multi, 50)
+    wav_multi = np.array_split(wav_multi, 5000)
     return wav_multi
 
 
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     NUMBER_EM_ITERATION = 20
     MIN_SEGMENT_DUR = 2
     # INPUT_ARRAYS = "./../../channels_4"
-    # SOURCE_PATH = "./../../sample_data/eval"
+    # SOURCE_PATH = "./../../sample_data/dev"
     # ENHANCED_PATH = "./../../"
     INPUT_ARRAYS = sys.argv[1]
     SOURCE_PATH = sys.argv[2]
