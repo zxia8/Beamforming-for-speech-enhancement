@@ -74,24 +74,24 @@ def main():
 
     cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
                                            MIN_SEGMENT_DUR)
-    os.system("init done")
+    os.system("echo init done")
     for i in range(len(multi_channels_data)):
         complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(
             multi_channels_data[i])
-        os.system("mask estimation done")
+        os.system("echo mask estimation done")
 
         beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
-        os.system("bmf done")
+        os.system("echo bmf done")
 
         enhanced_speech.extend(cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum))
-        os.system("enhan done")
+        os.system("echo enhan done")
 
         # sf.write(ENHANCED_PATH + '/' + naming(char_list),
         # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
 
     wf.write(ENHANCED_PATH + '/' + key + ".wav",
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
-    os.system("all done")
+    os.system("echo all done")
 
     # if IS_MASK_PLOT:
     #     pl.figure()
