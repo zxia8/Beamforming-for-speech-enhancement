@@ -7,7 +7,7 @@ Created on Tue Jan 15 11:49:02 2019
 import numpy as np
 # from memory_profiler import profile
 from scipy.io import wavfile as wf
-
+import os
 
 from beamformer import complexGMM_mvdr as cgmm
 import sys
@@ -68,33 +68,30 @@ def main():
     a = list(inp.keys())
     key = a[LINE-1]
     enhanced_speech = []
-    print(inp[key])
-
 
     multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
-    print("data reading done")
+    os.system("echo data reading done")
 
     cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
                                            MIN_SEGMENT_DUR)
-    print("init done")
+    os.system("init done")
     for i in range(len(multi_channels_data)):
         complex_spectrum, R_x, R_n, noise_mask, speech_mask = cgmm_beamformer.get_spatial_correlation_matrix(
             multi_channels_data[i])
-        print("mask estimation done")
+        os.system("mask estimation done")
 
         beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
-        print("beamforming done")
+        os.system("bmf done")
 
         enhanced_speech.extend(cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum))
-        print("enhancing done")
+        os.system("enhan done")
 
         # sf.write(ENHANCED_PATH + '/' + naming(char_list),
         # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
 
     wf.write(ENHANCED_PATH + '/' + key + ".wav",
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
-    print("output done")
-    print("all done")
+    os.system("all done")
 
     # if IS_MASK_PLOT:
     #     pl.figure()
