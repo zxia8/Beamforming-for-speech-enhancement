@@ -7,6 +7,7 @@ Created on Fri Jan 11 11:40:29 2019
 import numpy as np
 import copy
 from . import util
+import os
 
 
 class complexGMM_mvdr:
@@ -56,6 +57,7 @@ class complexGMM_mvdr:
             
         # go EMiteration
         for ite in range(0, self.number_of_EM_iterate):
+            os.system("echo iter " + str(ite + 1))
             print('iter', str(ite + 1) + '/' + str(self.number_of_EM_iterate))
             for f in range(0, number_of_bins):                             
                 R_noisy_onbin = copy.deepcopy(R_noisy[:, :, f])
