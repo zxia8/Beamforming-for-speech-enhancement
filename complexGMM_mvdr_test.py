@@ -66,7 +66,7 @@ def main():
 
     inp = file_dict(INPUT_ARRAYS)
     a = list(inp.keys())
-    key = a[LINE-1]
+    key = a[int(LINE)-1]
     enhanced_speech = []
 
     multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
