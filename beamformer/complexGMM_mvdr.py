@@ -8,8 +8,8 @@ import numpy as np
 import copy
 from . import util
 
+
 class complexGMM_mvdr:
-    
     def __init__(self,
                  sampling_frequency,
                  fft_length,
