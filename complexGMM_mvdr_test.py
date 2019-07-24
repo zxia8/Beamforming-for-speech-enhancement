@@ -11,6 +11,8 @@ import os
 
 from beamformer import complexGMM_mvdr as cgmm
 import sys
+from beamformer import util
+from beamformer import minimum_variance_distortioless_response as mvdr
 
 
 # @profile
@@ -41,7 +43,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     wav_multi[:, 3] = wav3
     os.system("echo read done")
 
-    wav_multi = np.array_split(wav_multi, 100)
+    wav_multi = np.array_split(wav_multi, 43)
     return wav_multi
 
 
@@ -62,15 +64,7 @@ def file_dict(input_arrays):
 
 
 # @profile
-def main():
-
-    inp = file_dict(INPUT_ARRAYS)
-    a = list(inp.keys())
-    key = a[int(LINE)-1]
-    enhanced_speech = []
-
-    multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
-    os.system("echo data reading done")
+def cgmm_mvdr():
 
     cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
                                            MIN_SEGMENT_DUR)
@@ -104,6 +98,27 @@ def main():
     #     pl.show()
 
 
+def mvdrt():
+
+    for i in range(len(multi_channels_data)):
+        complex_spectrum, _ = util.get_3dim_spectrum_from_data(multi_channels_data[i], FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
+
+        mvdr_beamformer = mvdr.minimum_variance_distortioless_response(MIC_ANGLE_VECTOR, MIC_DIAMETER,
+                                                                       sampling_frequency=SAMPLING_FREQUENCY,
+                                                                       fft_length=FFT_LENGTH, fft_shift=FFT_SHIFT)
+
+        steering_vector = mvdr_beamformer.get_sterring_vector(LOOK_DIRECTION)
+
+
+        spatial_correlation_matrix = mvdr_beamformer.get_spatial_correlation_matrix(multi_channels_data[i])
+
+        beamformer = mvdr_beamformer.get_mvdr_beamformer(steering_vector, spatial_correlation_matrix)
+
+        enhanced_speech.extend(mvdr_beamformer.apply_beamformer(beamformer, complex_spectrum))
+
+    wf.write(ENHANCED_PATH + '/' + key + ".wav", SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
+
+
 if __name__ == '__main__':
     SAMPLING_FREQUENCY = 16000
     FFT_LENGTH = 512
@@ -112,7 +127,7 @@ if __name__ == '__main__':
     MIN_SEGMENT_DUR = 2
 
     # INPUT_ARRAYS = "./../../channels_4"
-    # SOURCE_PATH = "./../../sample_data/eval"
+    # SOURCE_PATH = "./../../sample_data/dev"
     # ENHANCED_PATH = "./../../"
     # LINE = 2
 
@@ -121,6 +136,20 @@ if __name__ == '__main__':
     ENHANCED_PATH = sys.argv[3]
     LINE = sys.argv[4]
 
+    MIC_ANGLE_VECTOR = np.array([0, 60, 120, 180])
+    LOOK_DIRECTION = 0
+    MIC_DIAMETER = 0.1
+
+    inp = file_dict(INPUT_ARRAYS)
+    a = list(inp.keys())
+    key = a[int(LINE) - 1]
+    enhanced_speech = []
+
+    multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
+    os.system("echo data reading done")
+
     # IS_MASK_PLOT = False
 
-    main()
+    # cgmm_mvdr()
+    mvdrt()
+

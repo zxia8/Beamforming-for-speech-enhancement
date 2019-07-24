@@ -59,7 +59,7 @@ def get_3dim_spectrum_from_data(wav_data, frame, shift, fftl):
     """
     dump_wav : channel_size * speech_size (2dim)
     """
-    len_sample, len_channel_vec = np.shape(wav_data)            
+    len_sample, len_channel_vec = len(wav_data[:, 0]), 4
     dump_wav = wav_data.T
     dump_wav = dump_wav / np.max(np.abs(dump_wav)) * 0.7
     window = sg.hanning(fftl + 1, 'periodic')[: - 1]

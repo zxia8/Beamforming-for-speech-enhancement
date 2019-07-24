@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3767025b-3cf9-48f0-a7a1-40f9b0630c6c" name="Default Changelist" comment="" />
+    <list default="true" id="3767025b-3cf9-48f0-a7a1-40f9b0630c6c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beamformer/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/beamformer/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/complexGMM_mvdr_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexGMM_mvdr_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minimum_variance_distortioless_response_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/minimum_variance_distortioless_response_test.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,13 +15,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/complexGMM_mvdr_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="24" selection-start-line="4" selection-start-column="17" selection-end-line="7" selection-end-column="24" />
+            <state relative-caret-position="799">
+              <caret line="144" column="26" lean-forward="true" selection-start-line="144" selection-start-column="26" selection-end-line="144" selection-end-column="26" />
               <folding>
-                <marker date="1563912699657" expanded="true" signature="3272:3383" ph="..." />
+                <element signature="e#87#105#0" expanded="true" />
+                <element signature="e#1078#1347#0" />
+                <marker date="1563989622221" expanded="true" signature="4184:4295" ph="..." />
               </folding>
             </state>
           </provider>
@@ -25,17 +32,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/fromnumeric.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="24752">
-              <caret line="1467" selection-start-line="1467" selection-end-line="1467" />
+            <state relative-caret-position="227">
+              <caret line="1697" selection-start-line="1697" selection-end-line="1697" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/minimum_variance_distortioless_response_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="45" selection-end-line="45" />
+            <state relative-caret-position="416">
+              <caret line="41" column="80" lean-forward="true" selection-start-line="41" selection-start-column="80" selection-end-line="41" selection-end-column="80" />
+              <folding>
+                <element signature="e#87#105#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -53,8 +63,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/beamformer/delaysum.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            <state relative-caret-position="51">
+              <caret line="3" selection-start-line="3" selection-end-line="3" />
+              <folding>
+                <element signature="e#24#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -62,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/delaysum_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-start-column="2" selection-end-line="38" selection-end-column="107" />
+            <state relative-caret-position="170">
+              <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -71,8 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="59" column="50" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="50" />
+            <state relative-caret-position="391">
+              <caret line="119" column="11" lean-forward="true" selection-start-line="119" selection-start-column="11" selection-end-line="119" selection-end-column="11" />
               <folding>
                 <element signature="e#87#105#0" expanded="true" />
               </folding>
@@ -94,8 +107,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/beamformer/util.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="36" />
+            <state relative-caret-position="1662">
+              <caret line="123" column="28" lean-forward="true" selection-start-line="123" selection-start-column="28" selection-end-line="123" selection-end-column="28" />
+              <folding>
+                <element signature="e#88#106#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -103,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="-208">
+              <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
               <folding>
                 <element signature="e#87#105#0" expanded="true" />
               </folding>
@@ -120,6 +136,9 @@
       <find>sf</find>
       <find>util</find>
       <find>print</find>
+      <find>cgmm</find>
+      <find>len</find>
+      <find>4</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -129,11 +148,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/beamformer/delaysum.py" />
-        <option value="$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py" />
-        <option value="$PROJECT_DIR$/beamformer/util.py" />
         <option value="$PROJECT_DIR$/delaysum_test.py" />
-        <option value="$PROJECT_DIR$/minimum_variance_distortioless_response_test.py" />
         <option value="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" />
+        <option value="$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py" />
+        <option value="$PROJECT_DIR$/minimum_variance_distortioless_response_test.py" />
+        <option value="$PROJECT_DIR$/beamformer/util.py" />
         <option value="$PROJECT_DIR$/complexGMM_mvdr_test.py" />
       </list>
     </option>
@@ -148,9 +167,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
-    <option name="width" value="973" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="303" />
+    <option name="y" value="14" />
+    <option name="width" value="1416" />
     <option name="height" value="1087" />
   </component>
   <component name="ProjectView">
@@ -193,7 +213,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.complexGMM_mvdr_test">
     <configuration name="complexGMM_mvdr_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Beamforming-for-speech-enhancement" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -215,9 +235,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="minimum_variance_distortioless_response_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Beamforming-for-speech-enhancement" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/minimum_variance_distortioless_response_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.complexGMM_mvdr_test" />
+        <item itemvalue="Python.minimum_variance_distortioless_response_test" />
       </list>
     </recent_temporary>
   </component>
@@ -235,16 +277,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="303" y="14" width="1416" height="1087" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1227608" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16908564" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32952183" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3981289" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3326338" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3976915" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -256,6 +298,17 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/beamformer/util.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/Anaconda3/Lib/codecs.py">
@@ -286,32 +339,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24752">
-          <caret line="1467" selection-start-line="1467" selection-end-line="1467" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor />
           <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/delaysum.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/delaysum_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-start-column="2" selection-end-line="38" selection-end-column="107" />
         </state>
       </provider>
     </entry>
@@ -324,34 +356,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/util.py">
+    <entry file="file://$PROJECT_DIR$/beamformer/delaysum.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
           <folding>
-            <element signature="e#87#105#0" expanded="true" />
+            <element signature="e#24#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/minimum_variance_distortioless_response_test.py">
+    <entry file="file://$PROJECT_DIR$/delaysum_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="45" selection-end-line="45" />
+        <state relative-caret-position="170">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="1697" selection-start-line="1697" selection-end-line="1697" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="59" column="50" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="50" />
+        <state relative-caret-position="391">
+          <caret line="119" column="11" lean-forward="true" selection-start-line="119" selection-start-column="11" selection-end-line="119" selection-end-column="11" />
           <folding>
             <element signature="e#87#105#0" expanded="true" />
           </folding>
@@ -360,10 +392,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/complexGMM_mvdr_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="24" selection-start-line="4" selection-start-column="17" selection-end-line="7" selection-end-column="24" />
+        <state relative-caret-position="799">
+          <caret line="144" column="26" lean-forward="true" selection-start-line="144" selection-start-column="26" selection-end-line="144" selection-end-column="26" />
           <folding>
-            <marker date="1563912699657" expanded="true" signature="3272:3383" ph="..." />
+            <element signature="e#87#105#0" expanded="true" />
+            <element signature="e#1078#1347#0" />
+            <marker date="1563989622221" expanded="true" signature="4184:4295" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-208">
+          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+          <folding>
+            <element signature="e#87#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beamformer/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1662">
+          <caret line="123" column="28" lean-forward="true" selection-start-line="123" selection-start-column="28" selection-end-line="123" selection-end-column="28" />
+          <folding>
+            <element signature="e#88#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/minimum_variance_distortioless_response_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="41" column="80" lean-forward="true" selection-start-line="41" selection-start-column="80" selection-end-line="41" selection-end-column="80" />
+          <folding>
+            <element signature="e#87#105#0" expanded="true" />
           </folding>
         </state>
       </provider>
