@@ -17,12 +17,18 @@ from beamformer import minimum_variance_distortioless_response as mvdr
 
 # @profile
 def multi_channel_read(list, path):  # list: file_dict[key]
+    """
+
+    :param list: file_dict[key] is a list, which is same audio with 4 channels
+    :param path: the file dir
+    :return: a list in which stores the chunks from file reading. chunks are len(data_chunk) * 4 channels
+    """
     for i in range(len(list)):
         list[i] = path + '/' + list[i]
 
     # wav, _ = sf.read(list[0], dtype='float32')
     _, wav = wf.read(list[0])
-    wav_multi = np.zeros((len(wav), 4), dtype=np.float16)
+    wav_multi = np.zeros((len(wav), 4), dtype=np.float16)  # float32 takes too much memory
     wav_multi[:, 0] = wav
     os.system("echo column 1 done")
 
@@ -48,7 +54,12 @@ def multi_channel_read(list, path):  # list: file_dict[key]
 
 
 def file_dict(input_arrays):
+    """
 
+    :param input_arrays: the channels_4 file in run_MVDR.sh (same with the one in run_beamformit.sh)
+    :return: a dictionary with structure: {'S01_U01':'S01_U01 files with all channels',
+                                           'S01_U02': 'S01_U01 files with all channels', ...}
+    """
     file_dic = {}
     with open(input_arrays, 'r') as f:
         file_group = f.read().split("\n")
@@ -64,7 +75,11 @@ def file_dict(input_arrays):
 
 
 # @profile
-def cgmm_mvdr():
+def do_cgmm_mvdr():
+    """
+    Doing the cgmm_mvdr algorithm
+    :return: no return
+    """
 
     cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
                                            MIN_SEGMENT_DUR)
@@ -98,7 +113,11 @@ def cgmm_mvdr():
     #     pl.show()
 
 
-def mvdrt():
+def do_mvdr():
+    """
+    Doing the simple mvdr algorithm
+    :return: no return
+    """
 
     for i in range(len(multi_channels_data)):
         complex_spectrum, _ = util.get_3dim_spectrum_from_data(multi_channels_data[i], FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
@@ -120,12 +139,18 @@ def mvdrt():
 
 
 if __name__ == '__main__':
+    '''
+    parameters for beamforming
+    '''
     SAMPLING_FREQUENCY = 16000
     FFT_LENGTH = 512
     FFT_SHIFT = 128
     NUMBER_EM_ITERATION = 20
     MIN_SEGMENT_DUR = 2
 
+    '''
+    args from .sh files
+    '''
     # INPUT_ARRAYS = "./../../channels_4"
     # SOURCE_PATH = "./../../sample_data/dev"
     # ENHANCED_PATH = "./../../"
@@ -136,20 +161,33 @@ if __name__ == '__main__':
     ENHANCED_PATH = sys.argv[3]
     LINE = sys.argv[4]
 
-    MIC_ANGLE_VECTOR = np.array([0, 60, 120, 180])
+    '''
+    parameters for simple mvdr
+    '''
+    MIC_ANGLE_VECTOR = np.array([0, 90, 180, 270])
     LOOK_DIRECTION = 0
     MIC_DIAMETER = 0.1
 
+    '''
+    get file dictionary (see comment for file_dict())
+    get current target files (i.e. S01_U01_CH*.wav)
+    '''
     inp = file_dict(INPUT_ARRAYS)
     a = list(inp.keys())
-    key = a[int(LINE) - 1]
-    enhanced_speech = []
+    key = a[int(LINE) - 1]  # i.e. S01_U01
 
+    '''
+    prepare data for bmf (see comment for multi_channel_read())
+    '''
     multi_channels_data = multi_channel_read(inp[key], SOURCE_PATH)
     os.system("echo data reading done")
 
     # IS_MASK_PLOT = False
 
-    # cgmm_mvdr()
-    mvdrt()
+    '''
+    run different algorithm
+    '''
+    enhanced_speech = []
+    # do_cgmm_mvdr()
+    do_mvdr()
 
