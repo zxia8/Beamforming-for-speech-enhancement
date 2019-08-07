@@ -29,7 +29,7 @@ class complexGMM_mvdr:
         self.scm_inv_threshold=scm_inv_threshold
         self.beamformer_inv_threshold=beamformer_inv_threshold
         
-    def get_spatial_correlation_matrix(self, speech_data):
+    def get_spatial_correlation_matrix(self, speech_data, R_noise, R_noisy):
         print("---m1---")
         complex_spectrum, _ = util.get_3dim_spectrum_from_data(speech_data, self.fft_length, self.fft_shift, self.fft_length)
         number_of_channels, number_of_frames, number_of_bins = np.shape(complex_spectrum)
@@ -39,8 +39,8 @@ class complexGMM_mvdr:
         lambda_noisy = np.zeros((number_of_frames, number_of_bins), dtype=np.complex64)
         phi_noise = np.ones((number_of_frames, number_of_bins), dtype=np.float64)
         phi_noisy = np.ones((number_of_frames, number_of_bins), dtype=np.float64)
-        R_noise = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
-        R_noisy = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)        
+        # R_noise = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
+        # R_noisy = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
         yyh = np.zeros((number_of_channels, number_of_channels, number_of_frames, number_of_bins), dtype=np.complex64)
         
         # init R_noisy and R_noise
@@ -48,17 +48,16 @@ class complexGMM_mvdr:
             for t in range(0, number_of_frames):
                 h = np.multiply.outer(complex_spectrum[:, t, f], np.conj(complex_spectrum[:, t, f]).T)
                 yyh[:, :, t, f] = h
-                R_noisy[:, :, f] = R_noisy[:, :, f] + h
-            R_noisy[:, :, f] = R_noisy[:, :, f] / number_of_frames
-            R_noise[:, :, f] = np.eye(number_of_channels, number_of_channels, dtype=np.complex64)        
-        R_xn = copy.deepcopy(R_noisy)                    
-        p_noise =  np.ones((number_of_frames, number_of_bins), dtype=np.float64)
-        p_noisy =  np.ones((number_of_frames, number_of_bins), dtype=np.float64)
+            #     R_noisy[:, :, f] = R_noisy[:, :, f] + h
+            # R_noisy[:, :, f] = R_noisy[:, :, f] / number_of_frames
+            # R_noise[:, :, f] = np.eye(number_of_channels, number_of_channels, dtype=np.complex64)
+        # R_xn = copy.deepcopy(R_noisy)
+        p_noise = np.ones((number_of_frames, number_of_bins), dtype=np.float64)
+        p_noisy = np.ones((number_of_frames, number_of_bins), dtype=np.float64)
             
         # go EMiteration
         for ite in range(0, self.number_of_EM_iterate):
-            os.system("echo iter " + str(ite + 1))
-            print('iter', str(ite + 1) + '/' + str(self.number_of_EM_iterate))
+            os.system("echo iter " + str(ite + 1) + '/' + str(self.number_of_EM_iterate))
             for f in range(0, number_of_bins):                             
                 R_noisy_onbin = copy.deepcopy(R_noisy[:, :, f])
                 R_noise_onbin = copy.deepcopy(R_noise[:, :, f])                
@@ -85,13 +84,14 @@ class complexGMM_mvdr:
                         phi_noisy[t, f] = self.condition_number_inv_threshold
                                             
                     # update p (real)
-                    k_noise_1 = np.matmul(np.conj(obs).T , R_noise_inv / phi_noise[t, f])            
+                    k_noise_1 = np.matmul(np.conj(obs).T, R_noise_inv / phi_noise[t, f])
                     k_noise = np.matmul(k_noise_1, obs)       
                     tmp_p_noise = np.linalg.det((phi_noise[t, f] * R_noise_onbin).astype(np.float64))
                     p_noise[t, f] = np.real(np.exp( - np.real(k_noise).astype(np.float64)) / (np.pi * tmp_p_noise))                    
                     # avoid nan or inf
                     if np.isnan(p_noise[t, f]) == True or np.isinf(p_noise[t, f]) == True:
-                        p_noise[t, f] = np.nan_to_num(p_noise[t, f])                    
+                        p_noise[t, f] = np.nan_to_num(p_noise[t, f])
+
                     k_noisy_1 = np.matmul(np.conj(obs).T, R_noisy_inv / phi_noisy[t, f])
                     k_noisy = np.real(np.matmul(k_noisy_1, obs))
                     tmp_p_noisy = np.linalg.det((phi_noisy[t, f] * R_noisy_onbin).astype(np.float64))
@@ -112,26 +112,25 @@ class complexGMM_mvdr:
                 R_noise[:, :, f] = R_noise_accu / np.sum(lambda_noise[:, f], dtype=np.complex64)    
                 R_noisy[:, :, f] = R_noisy_accu / np.sum(lambda_noisy[:, f], dtype=np.complex64) 
     
-        # detect noise cluster by entropy        
-        for f in range(0, number_of_bins):
-            eig_value1 = np.linalg.eigvals(R_noise[:, :, f])
-            eig_value2 = np.linalg.eigvals(R_noisy[:, :, f])
-            en_noise = np.matmul( - eig_value1.T / np.sum(eig_value1), np.log(eig_value1 / np.sum(eig_value1)))
-            en_noisy = np.matmul( - eig_value2.T / np.sum(eig_value2), np.log(eig_value2 / np.sum(eig_value2)))    
-            if en_noise < en_noisy:
-                Rn = copy.deepcopy(R_noise[:, :, f])
-                R_noise[:, :, f] = R_noisy[:, :, f]
-                R_noisy[:, :, f] = Rn
+        # detect noise cluster by entropy
+        # for f in range(0, number_of_bins):
+        #     eig_value1 = np.linalg.eigvals(R_noise[:, :, f])
+        #     eig_value2 = np.linalg.eigvals(R_noisy[:, :, f])
+        #     en_noise = np.matmul( - eig_value1.T / np.sum(eig_value1), np.log(eig_value1 / np.sum(eig_value1)))
+        #     en_noisy = np.matmul( - eig_value2.T / np.sum(eig_value2), np.log(eig_value2 / np.sum(eig_value2)))
+        #     if en_noise < en_noisy:
+        #         Rn = copy.deepcopy(R_noise[:, :, f])
+        #         R_noise[:, :, f] = R_noisy[:, :, f]
+        #         R_noisy[:, :, f] = Rn
         
-        R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
-        for f in range(0, number_of_bins):
-            for t in range(0, number_of_frames):
-                R_n[:, :, f] = R_n[:, :, f] + lambda_noise[t, f] * yyh[:, :, t, f]
-            R_n[:, :, f] = R_n[:, :, f] / np.sum(lambda_noise[:, f], dtype=np.complex64)    
-        R_x = R_xn - R_n
-        return (complex_spectrum, R_x, R_n, lambda_noise, lambda_noisy)
+        # R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
+        # for f in range(0, number_of_bins):
+        #     for t in range(0, number_of_frames):
+        #         R_n[:, :, f] = R_n[:, :, f] + lambda_noise[t, f] * yyh[:, :, t, f]
+        #     R_n[:, :, f] = R_n[:, :, f] / np.sum(lambda_noise[:, f], dtype=np.complex64)
+        # R_x = R_xn - R_n
+        return R_noise, R_noisy, lambda_noise, number_of_frames, yyh
 
-                        
     def get_mvdr_beamformer(self, R_x, R_n):
         number_of_channels, _, number_of_bins = np.shape(R_x)
         beamformer = np.ones((number_of_channels, number_of_bins), dtype=np.complex64)        
