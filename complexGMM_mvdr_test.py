@@ -245,10 +245,10 @@ if __name__ == '__main__':
     CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunk/dev"
     ENHANCED_PATH = "."
     LINE = 2
-    INPUT_ARRAYS = sys.argv[1]
-    SOURCE_PATH = sys.argv[2]
-    ENHANCED_PATH = sys.argv[3]
-    LINE = sys.argv[4]
+    # INPUT_ARRAYS = sys.argv[1]
+    # SOURCE_PATH = sys.argv[2]
+    # ENHANCED_PATH = sys.argv[3]
+    # LINE = sys.argv[4]
 
     '''
     parameters for simple mvdr
