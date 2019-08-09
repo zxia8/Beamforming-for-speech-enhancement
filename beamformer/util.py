@@ -12,6 +12,10 @@ from scipy.fftpack import fft, ifft
 import numpy.matlib as npm
 from scipy import signal as sg
 
+import wave
+import struct
+import os
+
 
 # def stab(mat, theta, num_channels):
 #     d = np.power(np.array(10, dtype=np.complex64), np.arange(- num_channels, 0, dtype=np.float))
@@ -89,6 +93,8 @@ def spec2wav(spectrogram, sampling_frequency, fftl, frame_len, shift_len):
     result = np.zeros(sampling_frequency * 60 * 5, dtype=np.float32)
     start_point = 0
     end_point = start_point + frame_len
+    print(end_point)
+    print(len(cut_data))
     for ii in range(0, n_of_frame):
         half_spec = spectrogram[ii, :]        
         cut_data[0:np.int(fftl / 2) + 1] = half_spec.T   
@@ -122,3 +128,5 @@ def spec2wav(spectrogram, sampling_frequency, fftl, frame_len, shift_len):
 #     if len(freq_beamformer[freq_beamformer >= theta_cov]) != 0:
 #         return np.ones(np.shape(freq_beamformer), dtype=np.complex64) * (1+1j)
 #     return freq_beamformer
+
+
