@@ -5,8 +5,8 @@ Created on Tue Jan 15 11:49:02 2019
 @author: a-kojima
 """
 import copy
-import pickle
-from pprint import pprint
+# import pickle
+# from pprint import pprint
 
 import numpy as np
 # from memory_profiler import profile
@@ -114,7 +114,7 @@ def name2vec(name_string):
 
 
 # @profile
-def do_cgmm_mvdr(audio):
+def do_cgmm_mvdr(audio, outname):
     """
     Doing the cgmm_mvdr algorithm
     :return: no return
@@ -147,8 +147,8 @@ def do_cgmm_mvdr(audio):
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
     # R_noise = np.zeros((4,4,129), dtype=np.complex64)
     # R_noisy = np.zeros((4,4,129), dtype=np.complex64)
-    # for i in range(len(multi_channels_data)):
-    for i in range(5):
+    for i in range(len(multi_channels_data)):
+    # for i in range(2):
         oo.start("chunk " + str(i))
         os.system("echo ---- chunk " + str(i + 1) + ' ----')
         R_noise, R_noisy, R_n, nf = cgmm_beamformer.get_spatial_correlation_matrix(
@@ -162,12 +162,12 @@ def do_cgmm_mvdr(audio):
     R_x = R_xn - R_n
     oo.stopPrint("mask")
 
-    f = open('R_n.pkl', 'wb')
-    pickle.dump(R_n, f)
-    f.close()
-    f = open('R_x.pkl', 'wb')
-    pickle.dump(R_x, f)
-    f.close()
+    # f = open('R_n.pkl', 'wb')
+    # pickle.dump(R_n, f)
+    # f.close()
+    # f = open('R_x.pkl', 'wb')
+    # pickle.dump(R_x, f)
+    # f.close()
 
     os.system("echo mask estimation done")
     oo.start("bmf")
@@ -179,8 +179,8 @@ def do_cgmm_mvdr(audio):
 
     # sf.write(ENHANCED_PATH + '/' + naming(char_list),
     # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
-    outname = '_'.join(name2vec(inputli[0])[:1])
-    wf.write(ENHANCED_PATH + '/' + outname + ".wav",
+
+    wf.write(ENHANCED_PATH + '/' + outname,
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
     os.system("echo all done")
     oo.stopPrint("bmf")
@@ -265,6 +265,7 @@ if __name__ == '__main__':
     # a = list(inp.keys())
     # key = a[int(LINE) - 1]  # i.e. S01_U01
     inputli = ['S02_U02.CH1.wav', 'S02_U02.CH2.wav', 'S02_U02.CH3.wav', 'S02_U02.CH4.wav']
+    outname = str(name2vec(inputli[0])[0] + '_' + name2vec(inputli[0])[1] + '.wav')
     data_name_list = []
     data_dir_list = []
     for n in inputli:
@@ -306,6 +307,6 @@ if __name__ == '__main__':
     '''
     run algorithm
     '''
-    do_cgmm_mvdr(audio)
+    do_cgmm_mvdr(audio, outname)
     # do_mvdr()
 

@@ -84,7 +84,7 @@ def spec2wav(spectrogram, sampling_frequency, fftl, frame_len, shift_len):
     n_of_frame, fft_half = np.shape(spectrogram)    
     hanning = sg.hanning(fftl + 1, 'periodic')[: - 1]    
     cut_data = np.zeros(fftl, dtype=np.complex64)
-    result = np.zeros(sampling_frequency * 42000 * 5, dtype=np.float32)
+    result = np.zeros(sampling_frequency * 4200 * 5, dtype=np.float32)
     start_point = 0
     end_point = start_point + frame_len
     for ii in range(0, n_of_frame):
