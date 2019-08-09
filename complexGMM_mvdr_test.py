@@ -221,12 +221,12 @@ if __name__ == '__main__':
     '''
     # INPUT_ARRAYS = "./../../channels_4"
     # SOURCE_PATH = "./../../fsdownload"
-    # CHUNK_PATH = "./../../audio_chunk/dev"
+    # CHUNK_PATH = "./../../audio_chunks/dev"
     # ENHANCED_PATH = "./../../"
     # LINE = 2
 
     SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio/dev"
-    CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunk/dev"
+    CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks/dev"
     ENHANCED_PATH = "."
     LINE = 2
     # INPUT_ARRAYS = sys.argv[1]
