@@ -17,7 +17,6 @@ import re
 from beamformer import complexGMM_mvdr as cgmm
 import sys
 from beamformer import util
-from beamformer import minimum_variance_distortioless_response as mvdr
 import time
 
 
@@ -141,44 +140,29 @@ def do_cgmm_mvdr(audio, outname):
         R_noise[:, :, f] = np.eye(number_of_channels, number_of_channels, dtype=np.complex64)
     R_xn = copy.deepcopy(R_noisy)
     oo.stopPrint("init")
-
     oo.start("em")
     frame = 0
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
-    # R_noise = np.zeros((4,4,129), dtype=np.complex64)
-    # R_noisy = np.zeros((4,4,129), dtype=np.complex64)
     for i in range(len(multi_channels_data)):
-    # for i in range(2):
         oo.start("chunk " + str(i))
         os.system("echo ---- chunk " + str(i + 1) + ' ----')
         R_noise, R_noisy, R_n, nf = cgmm_beamformer.get_spatial_correlation_matrix(
             multi_channels_data[i], R_noise, R_noisy, R_n)
         frame += nf
         oo.stopPrint("chunk " + str(i))
-
     oo.stopPrint("em")
-    oo.start("mask")
 
+    oo.start("mask")
     R_x = R_xn - R_n
     oo.stopPrint("mask")
-
-    # f = open('R_n.pkl', 'wb')
-    # pickle.dump(R_n, f)
-    # f.close()
-    # f = open('R_x.pkl', 'wb')
-    # pickle.dump(R_x, f)
-    # f.close()
-
     os.system("echo mask estimation done")
+
     oo.start("bmf")
     beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
     os.system("echo bmf done")
 
     enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum_audio)
     os.system("echo enhan done")
-
-    # sf.write(ENHANCED_PATH + '/' + naming(char_list),
-    # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
 
     wf.write(ENHANCED_PATH + '/' + outname,
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
@@ -308,5 +292,5 @@ if __name__ == '__main__':
     run algorithm
     '''
     do_cgmm_mvdr(audio, outname)
-    # do_mvdr()
+
 
