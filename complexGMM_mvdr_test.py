@@ -282,6 +282,7 @@ if __name__ == '__main__':
         for files in os.walk(dir):
             for i in range(len(files[2])):
                 ch.append(dir + '/' + files[2][i])
+        ch.sort()
         data_list.append(ch)
     input_data_list = []
 

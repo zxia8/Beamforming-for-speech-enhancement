@@ -6,15 +6,9 @@ Created on Mon Nov 26 10:09:47 2018
 
 """
 import numpy as np
-# import soundfile as sf
-# from scipy.io import wavfile as wf
 from scipy.fftpack import fft, ifft
 import numpy.matlib as npm
 from scipy import signal as sg
-
-import wave
-import struct
-import os
 
 
 # def stab(mat, theta, num_channels):
@@ -90,17 +84,15 @@ def spec2wav(spectrogram, sampling_frequency, fftl, frame_len, shift_len):
     n_of_frame, fft_half = np.shape(spectrogram)    
     hanning = sg.hanning(fftl + 1, 'periodic')[: - 1]    
     cut_data = np.zeros(fftl, dtype=np.complex64)
-    result = np.zeros(sampling_frequency * 60 * 5, dtype=np.float32)
+    result = np.zeros(sampling_frequency * 42000 * 5, dtype=np.float32)
     start_point = 0
     end_point = start_point + frame_len
-    print(end_point)
-    print(len(cut_data))
     for ii in range(0, n_of_frame):
         half_spec = spectrogram[ii, :]        
         cut_data[0:np.int(fftl / 2) + 1] = half_spec.T   
         cut_data[np.int(fftl / 2) + 1:] =  np.flip(np.conjugate(half_spec[1:np.int(fftl / 2)]), axis=0)
         cut_data2 = np.real(ifft(cut_data, n=fftl))        
-        result[start_point:end_point] = result[start_point:end_point] + np.real(cut_data2 * hanning.T) 
+        result[start_point:end_point] = result[start_point:end_point] + np.real(cut_data2 * hanning.T)
         start_point = start_point + shift_len
         end_point = end_point + shift_len
     return result[0:end_point - shift_len]
