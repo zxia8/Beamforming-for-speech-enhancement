@@ -13,7 +13,7 @@ import numpy as np
 from scipy.io import wavfile as wf
 import os
 import re
-
+import gc
 from beamformer import complexGMM_mvdr as cgmm
 import sys
 from beamformer import util
@@ -141,15 +141,13 @@ def do_cgmm_mvdr(audio, outname):
     R_xn = copy.deepcopy(R_noisy)
     oo.stopPrint("init")
     oo.start("em")
-    frame = 0
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
     for i in range(len(multi_channels_data)):
-        oo.start("chunk " + str(i))
+        oo.start("chunk " + str(i + 1))
         os.system("echo ---- chunk " + str(i + 1) + ' ----')
-        R_noise, R_noisy, R_n, nf = cgmm_beamformer.get_spatial_correlation_matrix(
+        R_noise, R_noisy, R_n = cgmm_beamformer.get_spatial_correlation_matrix(
             multi_channels_data[i], R_noise, R_noisy, R_n)
-        frame += nf
-        oo.stopPrint("chunk " + str(i))
+        oo.stopPrint("chunk " + str(i + 1))
     oo.stopPrint("em")
 
     oo.start("mask")
@@ -205,8 +203,7 @@ def do_cgmm_mvdr(audio, outname):
 
 
 if __name__ == '__main__':
-    t = MyTimer()
-
+    gc.disable()
     '''
     parameters for beamforming
     '''
@@ -234,12 +231,12 @@ if __name__ == '__main__':
     # ENHANCED_PATH = sys.argv[3]
     # LINE = sys.argv[4]
 
-    '''
-    parameters for simple mvdr
-    '''
-    MIC_ANGLE_VECTOR = np.array([0, 90, 180, 270])
-    LOOK_DIRECTION = 0
-    MIC_DIAMETER = 0.1
+    # '''
+    # parameters for simple mvdr
+    # '''
+    # MIC_ANGLE_VECTOR = np.array([0, 90, 180, 270])
+    # LOOK_DIRECTION = 0
+    # MIC_DIAMETER = 0.1
 
     '''
     get file dictionary (see comment for file_dict())
@@ -277,13 +274,6 @@ if __name__ == '__main__':
         data = multi_channel_read(input_data_list[i], '')
         multi_channels_data.append(data)
 
-    # if len(multi_channels_data[0]) + len(multi_channels_data[1]) == len(audio):
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
     os.system("echo data reading done")
 
     # IS_MASK_PLOT = False
@@ -292,5 +282,6 @@ if __name__ == '__main__':
     run algorithm
     '''
     do_cgmm_mvdr(audio, outname)
+    gc.enable()
 
 

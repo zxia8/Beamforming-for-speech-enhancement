@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3767025b-3cf9-48f0-a7a1-40f9b0630c6c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" beforeDir="false" afterPath="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/complexGMM_mvdr_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexGMM_mvdr_test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/complexGMM_mvdr_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="276" column="57" lean-forward="true" selection-start-line="276" selection-start-column="57" selection-end-line="276" selection-end-column="57" />
+            <state relative-caret-position="4046">
+              <caret line="238" column="24" lean-forward="true" selection-start-line="238" selection-start-column="24" selection-end-line="238" selection-end-column="24" />
               <folding>
                 <element signature="e#87#98#0" expanded="true" />
               </folding>
@@ -66,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1131">
-              <caret line="60" column="33" lean-forward="true" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+            <state relative-caret-position="348">
+              <caret line="132" column="36" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
               <folding>
                 <element signature="e#87#105#0" expanded="true" />
               </folding>
@@ -120,10 +121,10 @@
         <option value="$PROJECT_DIR$/noise.py" />
         <option value="$PROJECT_DIR$/zenme.py" />
         <option value="$PROJECT_DIR$/init.py" />
-        <option value="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" />
         <option value="$PROJECT_DIR$/beamformer/util.py" />
         <option value="$PROJECT_DIR$/beamformer/delaysum.py" />
         <option value="$PROJECT_DIR$/beamformer/__init__.py" />
+        <option value="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" />
         <option value="$PROJECT_DIR$/complexGMM_mvdr_test.py" />
       </list>
     </option>
@@ -311,12 +312,12 @@
     <frame x="666" y="0" width="1236" height="1087" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11686143" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.11686143" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3326338" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3326338" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.296957" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -507,16 +508,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1131">
-          <caret line="60" column="33" lean-forward="true" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
-          <folding>
-            <element signature="e#87#105#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-272">
@@ -534,10 +525,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="132" column="36" selection-start-line="132" selection-start-column="36" selection-end-line="132" selection-end-column="36" />
+          <folding>
+            <element signature="e#87#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/complexGMM_mvdr_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="276" column="57" lean-forward="true" selection-start-line="276" selection-start-column="57" selection-end-line="276" selection-end-column="57" />
+        <state relative-caret-position="4046">
+          <caret line="238" column="24" lean-forward="true" selection-start-line="238" selection-start-column="24" selection-end-line="238" selection-end-column="24" />
           <folding>
             <element signature="e#87#98#0" expanded="true" />
           </folding>
