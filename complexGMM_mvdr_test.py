@@ -146,8 +146,8 @@ def do_cgmm_mvdr(audio, outname):
     oo.start("em")
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
     gc.disable()
-    # for i in range(len(multi_channels_data)):
-    for i in range(1):
+    for i in range(len(multi_channels_data)):
+    # for i in range(1):
         oo.start("chunk " + str(i + 1))
 
         os.system("echo ---- chunk " + str(i + 1) + ' ----')
