@@ -30,7 +30,7 @@ class MyTimer:
     def stopPrint(self, label = None):
         duration = time.clock() - self.startTime[label]
         msg = 'TIME (%s): %.2f' % (label, duration)
-        print(msg, file=sys.stderr)
+        os.system("echo " + str(msg))
 
 
 # @profile
@@ -49,24 +49,24 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     _, wav = wf.read(list[0])
     wav_multi = np.zeros((len(wav), 4), dtype=np.float16)  # float32 takes too much memory
     wav_multi[:, 0] = wav
-    os.system("echo column 1 done")
+    # os.system("echo column 1 done")
 
     _, wav1 = wf.read(list[1])
-    os.system("echo wav 2 done")
+    # os.system("echo wav 2 done")
 
     wav_multi[:, 1] = wav1
-    os.system("echo column 2 done")
+    # os.system("echo column 2 done")
 
     _, wav2 = wf.read(list[2])
-    os.system("echo wav 3 done")
+    # os.system("echo wav 3 done")
     wav_multi[:, 2] = wav2
-    os.system("echo column 3 done")
+    # os.system("echo column 3 done")
 
     _, wav3 = wf.read(list[3])
-    os.system("echo wav 4 done")
+    # os.system("echo wav 4 done")
 
     wav_multi[:, 3] = wav3
-    os.system("echo read done")
+    # os.system("echo read done")
 
     # wav_multi_sep = np.split(wav_multi, 2)
     return wav_multi
@@ -132,6 +132,7 @@ def do_cgmm_mvdr(audio, outname):
 
     R_noise = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
     R_noisy = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
+
     for f in range(0, number_of_bins):
         for t in range(0, number_of_frames):
             h = np.multiply.outer(complex_spectrum_audio[:, t, f], np.conj(complex_spectrum_audio[:, t, f]).T)
@@ -139,16 +140,22 @@ def do_cgmm_mvdr(audio, outname):
         R_noisy[:, :, f] = R_noisy[:, :, f] / number_of_frames
         R_noise[:, :, f] = np.eye(number_of_channels, number_of_channels, dtype=np.complex64)
     R_xn = copy.deepcopy(R_noisy)
+    del complex_spectrum_audio, audio, _
+    gc.collect()
     oo.stopPrint("init")
     oo.start("em")
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
+    gc.disable()
     for i in range(len(multi_channels_data)):
         oo.start("chunk " + str(i + 1))
+
         os.system("echo ---- chunk " + str(i + 1) + ' ----')
+        os.system("echo " + str(input_data_list[i]))
         R_noise, R_noisy, R_n = cgmm_beamformer.get_spatial_correlation_matrix(
             multi_channels_data[i], R_noise, R_noisy, R_n)
         oo.stopPrint("chunk " + str(i + 1))
     oo.stopPrint("em")
+    gc.enable()
 
     oo.start("mask")
     R_x = R_xn - R_n
@@ -158,6 +165,11 @@ def do_cgmm_mvdr(audio, outname):
     oo.start("bmf")
     beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
     os.system("echo bmf done")
+    audio = multi_channel_read(inputli, SOURCE_PATH)
+    complex_spectrum_audio, _ = util.get_3dim_spectrum_from_data(audio,
+                                                                 cgmm_beamformer.fft_length,
+                                                                 cgmm_beamformer.fft_shift,
+                                                                 cgmm_beamformer.fft_length)
 
     enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum_audio)
     os.system("echo enhan done")
@@ -185,7 +197,8 @@ def do_cgmm_mvdr(audio, outname):
 #     """
 #
 #     for i in range(len(multi_channels_data)):
-#         complex_spectrum, _ = util.get_3dim_spectrum_from_data(multi_channels_data[i], FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
+#         complex_spectrum, _ = util.get_3dim_spectrum_from_data(multi_channels_data[i],
+#         FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
 #
 #         mvdr_beamformer = mvdr.minimum_variance_distortioless_response(MIC_ANGLE_VECTOR, MIC_DIAMETER,
 #                                                                        sampling_frequency=SAMPLING_FREQUENCY,
@@ -199,11 +212,12 @@ def do_cgmm_mvdr(audio, outname):
 #
 #         enhanced_speech.extend(mvdr_beamformer.apply_beamformer(beamformer, complex_spectrum))
 #
-#     wf.write(ENHANCED_PATH + '/' + key + ".wav", SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
+#     wf.write(ENHANCED_PATH + '/' + key + ".wav", SAMPLING_FREQUENCY,
+#     enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
 
 
 if __name__ == '__main__':
-    gc.disable()
+
     '''
     parameters for beamforming
     '''
@@ -277,11 +291,12 @@ if __name__ == '__main__':
     os.system("echo data reading done")
 
     # IS_MASK_PLOT = False
-
+    del data_list, data_name_list, data_dir_list
+    gc.collect()
     '''
     run algorithm
     '''
     do_cgmm_mvdr(audio, outname)
-    gc.enable()
+
 
 
