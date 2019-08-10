@@ -146,7 +146,8 @@ def do_cgmm_mvdr(audio, outname):
     oo.start("em")
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
     gc.disable()
-    for i in range(len(multi_channels_data)):
+    # for i in range(len(multi_channels_data)):
+    for i in range(1):
         oo.start("chunk " + str(i + 1))
 
         os.system("echo ---- chunk " + str(i + 1) + ' ----')
@@ -165,7 +166,7 @@ def do_cgmm_mvdr(audio, outname):
     oo.start("bmf")
     beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
     os.system("echo bmf done")
-    audio = multi_channel_read(inputli, SOURCE_PATH)
+    audio = multi_channel_read(inputli, '')
     complex_spectrum_audio, _ = util.get_3dim_spectrum_from_data(audio,
                                                                  cgmm_beamformer.fft_length,
                                                                  cgmm_beamformer.fft_shift,
@@ -231,7 +232,7 @@ if __name__ == '__main__':
     args from .sh files
     '''
     # INPUT_ARRAYS = "./../../channels_4"
-    # SOURCE_PATH = "./../../fsdownload"
+    # SOURCE_PATH = "./../../sample_data/eval"
     # CHUNK_PATH = "./../../audio_chunks/dev"
     # ENHANCED_PATH = "./../../"
     # LINE = 2
