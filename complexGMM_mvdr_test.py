@@ -47,7 +47,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
 
     # wav, _ = sf.read(list[0], dtype='float32')
     _, wav = wf.read(list[0])
-    wav_multi = np.zeros((len(wav), 4), dtype=np.float16)  # float32 takes too much memory
+    wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
     wav_multi[:, 0] = wav
     # os.system("echo column 1 done")
 
@@ -66,7 +66,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
     # os.system("echo wav 4 done")
 
     wav_multi[:, 3] = wav3
-    # os.system("echo read done")
+    os.system("echo read done")
 
     # wav_multi_sep = np.split(wav_multi, 2)
     return wav_multi
@@ -113,7 +113,7 @@ def name2vec(name_string):
 
 
 # @profile
-def do_cgmm_mvdr(audio, outname):
+def do_cgmm_mvdr(audio, outpath, outname):
     """
     Doing the cgmm_mvdr algorithm
     :return: no return
@@ -175,7 +175,7 @@ def do_cgmm_mvdr(audio, outname):
     enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum_audio)
     os.system("echo enhan done")
 
-    wf.write(ENHANCED_PATH + '/' + outname,
+    wf.write(outpath + '/' + outname,
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
     os.system("echo all done")
     oo.stopPrint("bmf")
@@ -231,16 +231,16 @@ if __name__ == '__main__':
     '''
     args from .sh files
     '''
-    # INPUT_ARRAYS = "./../../channels_4"
-    # SOURCE_PATH = "./../../sample_data/eval"
-    # CHUNK_PATH = "./../../audio_chunks/dev"
-    # ENHANCED_PATH = "./../../"
-    # LINE = 2
-
-    SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio/dev"
-    CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks/dev"
-    ENHANCED_PATH = "."
-    LINE = 2
+    # INPUT_ARRAYS = "file_name"
+    # SOURCE_PATH = "./../../fsdownload"
+    # CHUNK_PATH = "./../../audio_chunks"
+    # ENHANCED_PATH = "./../.."
+    # LINE = int(sys.argv[1])
+    INPUT_ARRAYS = "file_name"
+    SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
+    CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
+    ENHANCED_PATH = "/data/acs18zx/kaldi/egs/chime5/s5/enhan"
+    LINE = int(sys.argv[1])
     # INPUT_ARRAYS = sys.argv[1]
     # SOURCE_PATH = sys.argv[2]
     # ENHANCED_PATH = sys.argv[3]
@@ -260,18 +260,24 @@ if __name__ == '__main__':
     # inp = file_dict(INPUT_ARRAYS)
     # a = list(inp.keys())
     # key = a[int(LINE) - 1]  # i.e. S01_U01
-    inputli = ['S02_U02.CH1.wav', 'S02_U02.CH2.wav', 'S02_U02.CH3.wav', 'S02_U02.CH4.wav']
+    with open('file_name', 'r') as f:
+        a = f.readlines()
+    f.close()
+    inputli = a[LINE].split()
+    folder = inputli.pop(0)
+    mic = name2vec(inputli[0])[1].lower()
+    # inputli = ['S02_U02.CH1.wav', 'S02_U02.CH2.wav', 'S02_U02.CH3.wav', 'S02_U02.CH4.wav']
     outname = str(name2vec(inputli[0])[0] + '_' + name2vec(inputli[0])[1] + '.wav')
     data_name_list = []
     data_dir_list = []
     for n in inputli:
         data_name_list.append(name2vec(n))
-        data_dir_list.append(CHUNK_PATH + '/' + str(name2vec(n)[0]) + '/' +
+        data_dir_list.append(CHUNK_PATH + '/' + folder + '/' + str(name2vec(n)[0]) + '/' +
                              str(name2vec(n)[0] + '_' + name2vec(n)[1]) + '.' + name2vec(n)[2] + '/' + '_speech_')
     '''
     prepare data for bmf (see comment for multi_channel_read())
     '''
-    audio = multi_channel_read(inputli, SOURCE_PATH)
+    audio = multi_channel_read(inputli, SOURCE_PATH + '/' + folder)
     multi_channels_data = []
     data_list = []
     for dir in data_dir_list:
@@ -288,16 +294,18 @@ if __name__ == '__main__':
     for i in range(len(input_data_list)):
         data = multi_channel_read(input_data_list[i], '')
         multi_channels_data.append(data)
-
+    outpath = ENHANCED_PATH + '/' + folder + '_cgmm_mvdr_' + mic
+    if not os.path.exists(outpath):
+        os.mkdir(outpath)
     os.system("echo data reading done")
 
     # IS_MASK_PLOT = False
-    del data_list, data_name_list, data_dir_list
+    del data_list, data_name_list, data_dir_list, a
     gc.collect()
     '''
     run algorithm
     '''
-    do_cgmm_mvdr(audio, outname)
+    do_cgmm_mvdr(audio, outpath, outname)
 
 
 
