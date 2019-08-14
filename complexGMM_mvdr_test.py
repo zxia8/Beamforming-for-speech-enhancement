@@ -260,7 +260,7 @@ if __name__ == '__main__':
     # inp = file_dict(INPUT_ARRAYS)
     # a = list(inp.keys())
     # key = a[int(LINE) - 1]  # i.e. S01_U01
-    with open('file_name', 'r') as f:
+    with open(INPUT_ARRAYS, 'r') as f:
         a = f.readlines()
     f.close()
     inputli = a[LINE].split()
