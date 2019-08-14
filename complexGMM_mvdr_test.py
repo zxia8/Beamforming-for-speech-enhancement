@@ -236,7 +236,7 @@ if __name__ == '__main__':
     # CHUNK_PATH = "./../../audio_chunks"
     # ENHANCED_PATH = "./../.."
     # LINE = int(sys.argv[1])
-    INPUT_ARRAYS = "file_name"
+    INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
     SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
     CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
     ENHANCED_PATH = "/data/acs18zx/kaldi/egs/chime5/s5/enhan"
