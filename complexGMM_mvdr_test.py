@@ -47,7 +47,7 @@ def multi_channel_read(list, path):  # list: file_dict[key]
 
     # wav, _ = sf.read(list[0], dtype='float32')
     _, wav = wf.read(list[0])
-    wav_multi = np.zeros((len(wav), 4), dtype=np.float32)
+    wav_multi = np.zeros((len(wav), 4), dtype=np.float16)
     wav_multi[:, 0] = wav
     # os.system("echo column 1 done")
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
     # SOURCE_PATH = "./../../fsdownload"
     # CHUNK_PATH = "./../../audio_chunks"
     # ENHANCED_PATH = "./../.."
-    # LINE = int(sys.argv[1])
+    # LINE = 1
     INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
     SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
     CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
