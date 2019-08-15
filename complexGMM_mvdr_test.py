@@ -148,13 +148,17 @@ def do_cgmm_mvdr(audio, outpath, outname):
     gc.disable()
     for i in range(len(multi_channels_data)):
     # for i in range(1):
-        oo.start("chunk " + str(i + 1))
+        try:
+            oo.start("chunk " + str(i + 1))
 
-        os.system("echo ---- chunk " + str(i + 1) + ' ----')
-        os.system("echo " + str(input_data_list[i]))
-        R_noise, R_noisy, R_n = cgmm_beamformer.get_spatial_correlation_matrix(
-            multi_channels_data[i], R_noise, R_noisy, R_n)
-        oo.stopPrint("chunk " + str(i + 1))
+            os.system("echo ---- chunk " + str(i + 1) + ' ----')
+            os.system("echo " + str(input_data_list[i]))
+            R_noise, R_noisy, R_n = cgmm_beamformer.get_spatial_correlation_matrix(
+                multi_channels_data[i], R_noise, R_noisy, R_n)
+            oo.stopPrint("chunk " + str(i + 1))
+        except Exception:
+            continue
+
     oo.stopPrint("em")
     gc.enable()
 
