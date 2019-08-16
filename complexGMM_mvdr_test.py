@@ -5,19 +5,32 @@ Created on Tue Jan 15 11:49:02 2019
 @author: a-kojima
 """
 import copy
-import pickle
-from pprint import pprint
+# import pickle
+# from pprint import pprint
 
 import numpy as np
 # from memory_profiler import profile
 from scipy.io import wavfile as wf
 import os
 import re
-
+import gc
 from beamformer import complexGMM_mvdr as cgmm
 import sys
 from beamformer import util
-from beamformer import minimum_variance_distortioless_response as mvdr
+import time
+
+
+class MyTimer:
+    def __init__(self):
+        self.startTime = {}
+
+    def start(self, label = None):
+        self.startTime[label] = time.clock()
+
+    def stopPrint(self, label = None):
+        duration = time.clock() - self.startTime[label]
+        msg = 'TIME (%s): %.2f' % (label, duration)
+        os.system("echo " + str(msg))
 
 
 # @profile
@@ -34,23 +47,23 @@ def multi_channel_read(list, path):  # list: file_dict[key]
 
     # wav, _ = sf.read(list[0], dtype='float32')
     _, wav = wf.read(list[0])
-    wav_multi = np.zeros((len(wav), 4), dtype=np.float16)  # float32 takes too much memory
+    wav_multi = np.zeros((len(wav), 4), dtype=np.float16)
     wav_multi[:, 0] = wav
-    os.system("echo column 1 done")
+    # os.system("echo column 1 done")
 
     _, wav1 = wf.read(list[1])
-    os.system("echo wav 2 done")
+    # os.system("echo wav 2 done")
 
     wav_multi[:, 1] = wav1
-    os.system("echo column 2 done")
+    # os.system("echo column 2 done")
 
     _, wav2 = wf.read(list[2])
-    os.system("echo wav 3 done")
+    # os.system("echo wav 3 done")
     wav_multi[:, 2] = wav2
-    os.system("echo column 3 done")
+    # os.system("echo column 3 done")
 
     _, wav3 = wf.read(list[3])
-    os.system("echo wav 4 done")
+    # os.system("echo wav 4 done")
 
     wav_multi[:, 3] = wav3
     os.system("echo read done")
@@ -100,12 +113,14 @@ def name2vec(name_string):
 
 
 # @profile
-def do_cgmm_mvdr(audio):
+def do_cgmm_mvdr(audio, outpath, outname):
     """
     Doing the cgmm_mvdr algorithm
     :return: no return
     """
-
+    oo = MyTimer()
+    oo.start("all")
+    oo.start("init")
     cgmm_beamformer = cgmm.complexGMM_mvdr(SAMPLING_FREQUENCY, FFT_LENGTH, FFT_SHIFT, NUMBER_EM_ITERATION,
                                            MIN_SEGMENT_DUR)
 
@@ -117,6 +132,7 @@ def do_cgmm_mvdr(audio):
 
     R_noise = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
     R_noisy = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
+
     for f in range(0, number_of_bins):
         for t in range(0, number_of_frames):
             h = np.multiply.outer(complex_spectrum_audio[:, t, f], np.conj(complex_spectrum_audio[:, t, f]).T)
@@ -124,58 +140,49 @@ def do_cgmm_mvdr(audio):
         R_noisy[:, :, f] = R_noisy[:, :, f] / number_of_frames
         R_noise[:, :, f] = np.eye(number_of_channels, number_of_channels, dtype=np.complex64)
     R_xn = copy.deepcopy(R_noisy)
-
-    lambda_noise_all = []
-    yyh_all = []
-    frame = 0
-    # R_noise = np.zeros((4,4,129), dtype=np.complex64)
-    # R_noisy = np.zeros((4,4,129), dtype=np.complex64)
-    for i in range(len(multi_channels_data)):
-    # for i in range(2):
-        os.system("echo ---- chunk " + str(i + 1) + ' ----')
-        R_noise, R_noisy, lambda_noise, nf, yyh = cgmm_beamformer.get_spatial_correlation_matrix(
-            multi_channels_data[i], R_noise, R_noisy)
-        frame += nf
-        if i == 0:
-            lambda_noise_all = copy.deepcopy(lambda_noise)
-            yyh_all = copy.deepcopy(yyh)
-        else:
-            lambda_noise_all = np.concatenate((lambda_noise_all, lambda_noise), 0)
-            yyh_all = np.concatenate((yyh_all, yyh), 2)
-
+    del complex_spectrum_audio, audio, _
+    gc.collect()
+    oo.stopPrint("init")
+    oo.start("em")
     R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
-    for f in range(0, number_of_bins):
-        for t in range(0, frame):
-            R_n[:, :, f] = R_n[:, :, f] + lambda_noise_all[t, f] * yyh_all[:, :, t, f]
-        R_n[:, :, f] = R_n[:, :, f] / np.sum(lambda_noise_all[:, f], dtype=np.complex64)
+    gc.disable()
+    for i in range(len(multi_channels_data)):
+    # for i in range(1):
+
+        oo.start("chunk " + str(i + 1))
+
+        os.system("echo ---- chunk " + str(i + 1) + ' ----')
+        os.system("echo " + str(input_data_list[i]))
+        R_noise, R_noisy, R_n = cgmm_beamformer.get_spatial_correlation_matrix(
+            multi_channels_data[i], R_noise, R_noisy, R_n)
+        oo.stopPrint("chunk " + str(i + 1))
+
+
+    oo.stopPrint("em")
+    gc.enable()
+
+    oo.start("mask")
     R_x = R_xn - R_n
-    f = open('R_n.pkl', 'wb')
-    pickle.dump(R_n, f)
-    f.close()
-    f = open('R_x.pkl', 'wb')
-    pickle.dump(R_x, f)
-    f.close()
-
-
-
+    oo.stopPrint("mask")
     os.system("echo mask estimation done")
 
+    oo.start("bmf")
     beamformer, steering_vector = cgmm_beamformer.get_mvdr_beamformer(R_x, R_n)
     os.system("echo bmf done")
+    audio = multi_channel_read(inputli, '')
     complex_spectrum_audio, _ = util.get_3dim_spectrum_from_data(audio,
-                                                                     cgmm_beamformer.fft_length,
-                                                                     cgmm_beamformer.fft_shift,
-                                                                     cgmm_beamformer.fft_length)
+                                                                 cgmm_beamformer.fft_length,
+                                                                 cgmm_beamformer.fft_shift,
+                                                                 cgmm_beamformer.fft_length)
+
     enhanced_speech = cgmm_beamformer.apply_beamformer(beamformer, complex_spectrum_audio)
     os.system("echo enhan done")
 
-    # sf.write(ENHANCED_PATH + '/' + naming(char_list),
-    # enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65, SAMPLING_FREQUENCY)
-    outname = '_'.join(name2vec(inputli[0])[:1])
-    wf.write(ENHANCED_PATH + '/' + outname + ".wav",
+    wf.write(outpath + '/' + outname,
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
     os.system("echo all done")
-
+    oo.stopPrint("bmf")
+    oo.stopPrint("all")
     # if IS_MASK_PLOT:
     #     pl.figure()
     #     pl.subplot(2, 1, 1)
@@ -194,7 +201,8 @@ def do_cgmm_mvdr(audio):
 #     """
 #
 #     for i in range(len(multi_channels_data)):
-#         complex_spectrum, _ = util.get_3dim_spectrum_from_data(multi_channels_data[i], FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
+#         complex_spectrum, _ = util.get_3dim_spectrum_from_data(multi_channels_data[i],
+#         FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
 #
 #         mvdr_beamformer = mvdr.minimum_variance_distortioless_response(MIC_ANGLE_VECTOR, MIC_DIAMETER,
 #                                                                        sampling_frequency=SAMPLING_FREQUENCY,
@@ -208,7 +216,8 @@ def do_cgmm_mvdr(audio):
 #
 #         enhanced_speech.extend(mvdr_beamformer.apply_beamformer(beamformer, complex_spectrum))
 #
-#     wf.write(ENHANCED_PATH + '/' + key + ".wav", SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
+#     wf.write(ENHANCED_PATH + '/' + key + ".wav", SAMPLING_FREQUENCY,
+#     enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
 
 
 if __name__ == '__main__':
@@ -225,41 +234,53 @@ if __name__ == '__main__':
     '''
     args from .sh files
     '''
-    INPUT_ARRAYS = "./../../channels_4"
+    INPUT_ARRAYS = "file_name"
     SOURCE_PATH = "./../../fsdownload"
-    CHUNK_PATH = "./../../audio_chunk/dev"
-    ENHANCED_PATH = "./../../"
-    LINE = 2
+    CHUNK_PATH = "./../../audio_chunks"
+    ENHANCED_PATH = "./../.."
+    LINE = 10
+    # INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
+    # SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
+    # CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
+    # ENHANCED_PATH = "/data/acs18zx/kaldi/egs/chime5/s5/enhan"
+    # LINE = int(sys.argv[1])
     # INPUT_ARRAYS = sys.argv[1]
     # SOURCE_PATH = sys.argv[2]
     # ENHANCED_PATH = sys.argv[3]
     # LINE = sys.argv[4]
 
-    '''
-    parameters for simple mvdr
-    '''
-    MIC_ANGLE_VECTOR = np.array([0, 90, 180, 270])
-    LOOK_DIRECTION = 0
-    MIC_DIAMETER = 0.1
+    # '''
+    # parameters for simple mvdr
+    # '''
+    # MIC_ANGLE_VECTOR = np.array([0, 90, 180, 270])
+    # LOOK_DIRECTION = 0
+    # MIC_DIAMETER = 0.1
 
     '''
     get file dictionary (see comment for file_dict())
     get current target files (i.e. S01_U01_CH*.wav)
     '''
-    inp = file_dict(INPUT_ARRAYS)
-    a = list(inp.keys())
-    key = a[int(LINE) - 1]  # i.e. S01_U01
-    inputli = ['S02_U02.CH1.wav', 'S02_U02.CH2.wav', 'S02_U02.CH3.wav', 'S02_U02.CH4.wav']
+    # inp = file_dict(INPUT_ARRAYS)
+    # a = list(inp.keys())
+    # key = a[int(LINE) - 1]  # i.e. S01_U01
+    with open(INPUT_ARRAYS, 'r') as f:
+        a = f.readlines()
+    f.close()
+    inputli = a[LINE].split()
+    folder = inputli.pop(0)
+    mic = name2vec(inputli[0])[1].lower()
+    # inputli = ['S02_U02.CH1.wav', 'S02_U02.CH2.wav', 'S02_U02.CH3.wav', 'S02_U02.CH4.wav']
+    outname = str(name2vec(inputli[0])[0] + '_' + name2vec(inputli[0])[1] + '.wav')
     data_name_list = []
     data_dir_list = []
     for n in inputli:
         data_name_list.append(name2vec(n))
-        data_dir_list.append(CHUNK_PATH + '/' + str(name2vec(n)[0]) + '/' +
+        data_dir_list.append(CHUNK_PATH + '/' + folder + '/' + str(name2vec(n)[0]) + '/' +
                              str(name2vec(n)[0] + '_' + name2vec(n)[1]) + '.' + name2vec(n)[2] + '/' + '_speech_')
     '''
     prepare data for bmf (see comment for multi_channel_read())
     '''
-    audio = multi_channel_read(inputli, SOURCE_PATH)
+    audio = multi_channel_read(inputli, SOURCE_PATH + '/' + folder)
     multi_channels_data = []
     data_list = []
     for dir in data_dir_list:
@@ -267,6 +288,7 @@ if __name__ == '__main__':
         for files in os.walk(dir):
             for i in range(len(files[2])):
                 ch.append(dir + '/' + files[2][i])
+        ch.sort()
         data_list.append(ch)
     input_data_list = []
 
@@ -275,21 +297,18 @@ if __name__ == '__main__':
     for i in range(len(input_data_list)):
         data = multi_channel_read(input_data_list[i], '')
         multi_channels_data.append(data)
-
-    # if len(multi_channels_data[0]) + len(multi_channels_data[1]) == len(audio):
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
-    #     print("jdsnbvfhshvdbsuhs")
+    outpath = ENHANCED_PATH + '/' + folder + '_cgmm_mvdr_' + mic
+    if not os.path.exists(outpath):
+        os.mkdir(outpath)
     os.system("echo data reading done")
 
     # IS_MASK_PLOT = False
-
+    del data_list, data_name_list, data_dir_list, a
+    gc.collect()
     '''
     run algorithm
     '''
-    do_cgmm_mvdr(audio)
-    # do_mvdr()
+    do_cgmm_mvdr(audio, outpath, outname)
+
+
 

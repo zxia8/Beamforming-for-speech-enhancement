@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3767025b-3cf9-48f0-a7a1-40f9b0630c6c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" beforeDir="false" afterPath="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beamformer/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/beamformer/util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/complexGMM_mvdr_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexGMM_mvdr_test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/complexGMM_mvdr_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1009">
-              <caret line="181" column="45" selection-start-line="181" selection-start-column="45" selection-end-line="181" selection-end-column="45" />
+            <state relative-caret-position="153">
+              <caret line="228" column="20" lean-forward="true" selection-start-line="228" selection-start-column="20" selection-end-line="228" selection-end-column="20" />
               <folding>
                 <element signature="e#87#98#0" expanded="true" />
               </folding>
@@ -28,19 +26,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/_internal.py">
+        <entry file="file://$PROJECT_DIR$/beamformer/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="689" selection-start-line="689" selection-end-line="689" />
+            <state relative-caret-position="102">
+              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/zenme.py">
+        <entry file="file://$PROJECT_DIR$/minimum_variance_distortioless_response_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="39" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
+            <state relative-caret-position="204">
+              <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/beamformer/util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
@@ -48,8 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="58" column="43" selection-start-line="58" selection-start-column="43" selection-end-line="58" selection-end-column="43" />
+            <state relative-caret-position="102">
+              <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
               <folding>
                 <element signature="e#87#105#0" expanded="true" />
               </folding>
@@ -58,10 +65,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/scipy/io/wavfile.py">
+        <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3791">
-              <caret line="228" selection-start-line="228" selection-end-line="228" />
+            <state relative-caret-position="136">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#87#105#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,6 +94,8 @@
       <find>cgmm</find>
       <find>len</find>
       <find>4</find>
+      <find>float</find>
+      <find>float16</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,22 +104,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/beamformer/delaysum.py" />
         <option value="$PROJECT_DIR$/delaysum_test.py" />
         <option value="$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py" />
         <option value="$PROJECT_DIR$/minimum_variance_distortioless_response_test.py" />
         <option value="$PROJECT_DIR$/beamformer/noise.py" />
         <option value="$PROJECT_DIR$/noise.py" />
-        <option value="$PROJECT_DIR$/beamformer/util.py" />
         <option value="$PROJECT_DIR$/zenme.py" />
-        <option value="$PROJECT_DIR$/complexGMM_mvdr_test.py" />
+        <option value="$PROJECT_DIR$/init.py" />
+        <option value="$PROJECT_DIR$/beamformer/delaysum.py" />
+        <option value="$PROJECT_DIR$/beamformer/__init__.py" />
+        <option value="$PROJECT_DIR$/beamformer/util.py" />
         <option value="$PROJECT_DIR$/beamformer/complexGMM_mvdr.py" />
+        <option value="$PROJECT_DIR$/complexGMM_mvdr_test.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1147" />
-    <option name="width" value="780" />
+    <option name="x" value="743" />
+    <option name="y" value="34" />
+    <option name="width" value="1236" />
     <option name="height" value="1087" />
   </component>
   <component name="ProjectView">
@@ -115,6 +130,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,7 +147,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -285,14 +300,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1147" y="0" width="780" height="1087" extended-state="0" />
+    <frame x="743" y="34" width="1236" height="1087" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18867925" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18948247" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32948583" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3326338" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.296957" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -306,33 +321,14 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11686143" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3326338" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.296957" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32948583" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32843652" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32948583" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/zenme.py</url>
-          <line>4</line>
-          <option name="timeStamp" value="50" />
+          <url>file://$PROJECT_DIR$/complexGMM_mvdr_test.py</url>
+          <line>302</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -340,11 +336,17 @@
       <configuration name="PythonConfigurationType">
         <watch expression="multi_channels_data" language="Python" />
         <watch expression="audio" language="Python" />
+        <watch expression="a" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="watch">
+      <expression>
+        <expression-string>a</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>audio</expression-string>
         <language-id>Python</language-id>
@@ -380,13 +382,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../CHiME5_data/2.py" />
-    <entry file="file://$PROJECT_DIR$/minimum_variance_distortioless_response_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -397,43 +392,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/beamformer/noise.py" />
     <entry file="file://$PROJECT_DIR$/S09_U01_noise_0.wav" />
-    <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding>
-            <element signature="e#87#105#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/noise.py" />
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/re.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="190" selection-start-line="190" selection-end-line="190" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#87#105#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="72" column="46" selection-start-line="72" selection-start-column="46" selection-end-line="72" selection-end-column="46" />
-          <folding>
-            <element signature="e#88#106#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/Lib/pprint.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
@@ -455,41 +414,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../CHiME5_data/chime5/Time_sorting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="20" column="40" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/lib/shape_base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13107">
           <caret line="783" selection-start-line="783" selection-end-line="783" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24752">
-          <caret line="1467" selection-start-line="1467" selection-end-line="1467" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/delaysum_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/beamformer/delaysum.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-230">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#24#42#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -500,31 +428,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/scipy/io/wavfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3791">
-          <caret line="228" selection-start-line="228" selection-end-line="228" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/_internal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
+        <state relative-caret-position="11611">
           <caret line="689" selection-start-line="689" selection-end-line="689" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/zenme.py">
+    <entry file="file://$PROJECT_DIR$/zenme.py" />
+    <entry file="file://$PROJECT_DIR$/init.py" />
+    <entry file="file://$PROJECT_DIR$/delaysum_test.py" />
+    <entry file="file://$PROJECT_DIR$/beamformer/delaysum.py" />
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/numpy/core/fromnumeric.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="39" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
+        <state relative-caret-position="28662">
+          <caret line="1697" selection-start-line="1697" selection-end-line="1697" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../S02_U02.wav">
+      <provider selected="true" editor-type-id="LargeFileEditor">
+        <state relative-caret-position="-16320" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/scipy/io/wavfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="232" selection-start-line="232" selection-end-line="232" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/re.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="288" selection-start-line="288" selection-end-line="288" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../CHiME5_data/chime5/Time_sorting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2828">
+          <caret line="20" column="40" selection-start-line="20" selection-start-column="8" selection-end-line="20" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beamformer/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beamformer/util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/beamformer/minimum_variance_distortioless_response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#87#105#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/minimum_variance_distortioless_response_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/beamformer/complexGMM_mvdr.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="58" column="43" selection-start-line="58" selection-start-column="43" selection-end-line="58" selection-end-column="43" />
+        <state relative-caret-position="102">
+          <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
           <folding>
             <element signature="e#87#105#0" expanded="true" />
           </folding>
@@ -533,8 +515,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/complexGMM_mvdr_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1009">
-          <caret line="181" column="45" selection-start-line="181" selection-start-column="45" selection-end-line="181" selection-end-column="45" />
+        <state relative-caret-position="153">
+          <caret line="228" column="20" lean-forward="true" selection-start-line="228" selection-start-column="20" selection-end-line="228" selection-end-column="20" />
           <folding>
             <element signature="e#87#98#0" expanded="true" />
           </folding>
