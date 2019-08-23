@@ -234,16 +234,16 @@ if __name__ == '__main__':
     '''
     args from .sh files
     '''
-    INPUT_ARRAYS = "file_name"
-    SOURCE_PATH = "./../../fsdownload"
-    CHUNK_PATH = "./../../audio_chunks"
-    ENHANCED_PATH = "./../.."
-    LINE = 10
-    # INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
-    # SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
-    # CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
-    # ENHANCED_PATH = "/data/acs18zx/kaldi/egs/chime5/s5/enhan"
-    # LINE = int(sys.argv[1])
+    # INPUT_ARRAYS = "file_name"
+    # SOURCE_PATH = "./../../fsdownload"
+    # CHUNK_PATH = "./../../audio_chunks"
+    # ENHANCED_PATH = "./../.."
+    # LINE = 0
+    INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
+    SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
+    CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
+    ENHANCED_PATH = "/data/acs18zx/new3/kaldi/egs/chime5/s5/enhan"
+    LINE = int(sys.argv[1])
     # INPUT_ARRAYS = sys.argv[1]
     # SOURCE_PATH = sys.argv[2]
     # ENHANCED_PATH = sys.argv[3]
