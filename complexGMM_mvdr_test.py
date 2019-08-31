@@ -34,12 +34,12 @@ class MyTimer:
 
 
 # @profile
-def multi_channel_read(list, path):  # list: file_dict[key]
+def multi_channel_read(list, path):
     """
 
-    :param list: file_dict[key] is a list, which is names of the same audio with 4 channels
+    :param list: names of the same audio with 4 channels
     :param path: the file dir
-    :return: a list in which stores the chunks from file reading. chunks are len(data_chunk) * 4 channels
+    :return: a matrix in which stores the input data. The matrix size is len(data_chunk) * 4 channels
     """
     if path != '':
         for z in range(len(list)):
@@ -228,7 +228,7 @@ if __name__ == '__main__':
     SAMPLING_FREQUENCY = 16000
     FFT_LENGTH = 256
     FFT_SHIFT = 128
-    NUMBER_EM_ITERATION = 2
+    NUMBER_EM_ITERATION = 3
     MIN_SEGMENT_DUR = 2
 
     '''
@@ -238,7 +238,7 @@ if __name__ == '__main__':
     # SOURCE_PATH = "./../../fsdownload"
     # CHUNK_PATH = "./../../audio_chunks"
     # ENHANCED_PATH = "./../.."
-    # LINE = 0
+    # LINE = 67
     INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
     SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
     CHUNK_PATH = "/fastdata/acs18zx/CHiME5/audio_chunks"
@@ -266,6 +266,7 @@ if __name__ == '__main__':
     with open(INPUT_ARRAYS, 'r') as f:
         a = f.readlines()
     f.close()
+    gh = a[67]
     inputli = a[LINE].split()
     folder = inputli.pop(0)
     mic = name2vec(inputli[0])[1].lower()

@@ -32,8 +32,8 @@ def multi_channel_read(path):  # list: file_dict[key]
 
 a = {}
 del_list = []
-# dr = sys.argv[1]
-dir_to_check = './../../audio_chunks/dev/S02'
+dr = sys.argv[1]
+dir_to_check = '/fastdata/acs18zx/CHiME5/audio_chunks/' + dr
 
 
 for root, _, files in os.walk(dir_to_check):
@@ -54,7 +54,7 @@ for root, _, files in os.walk(dir_to_check):
                 d = min(multi_channel_read(file_name))
                 a[fullpath].append(abs(c-d))
 
-            if os.path.getsize(fullpath) < 100 * 1024 or max(a[fullpath]) < 6300:
+            if os.path.getsize(fullpath) < 100 * 1024 or max(a[fullpath]) < 8300:
                 os.system('echo del')
                 for i in range(1, 5):
                     vec[-3] = "CH" + str(i)

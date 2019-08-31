@@ -112,15 +112,15 @@ class complexGMM_mvdr:
                 R_noisy[:, :, f] = R_noisy_accu / np.sum(lambda_noisy[:, f], dtype=np.complex64) 
     
             # detect noise cluster by entropy
-            # for f in range(0, number_of_bins):
-            #     eig_value1 = np.linalg.eigvals(R_noise[:, :, f])
-            #     eig_value2 = np.linalg.eigvals(R_noisy[:, :, f])
-            #     en_noise = np.matmul( - eig_value1.T / np.sum(eig_value1), np.log(eig_value1 / np.sum(eig_value1)))
-            #     en_noisy = np.matmul( - eig_value2.T / np.sum(eig_value2), np.log(eig_value2 / np.sum(eig_value2)))
-            #     if en_noise < en_noisy:
-            #         Rn = copy.deepcopy(R_noise[:, :, f])
-            #         R_noise[:, :, f] = R_noisy[:, :, f]
-            #         R_noisy[:, :, f] = Rn
+            for f in range(0, number_of_bins):
+                eig_value1 = np.linalg.eigvals(R_noise[:, :, f])
+                eig_value2 = np.linalg.eigvals(R_noisy[:, :, f])
+                en_noise = np.matmul( - eig_value1.T / np.sum(eig_value1), np.log(eig_value1 / np.sum(eig_value1)))
+                en_noisy = np.matmul( - eig_value2.T / np.sum(eig_value2), np.log(eig_value2 / np.sum(eig_value2)))
+                if en_noise < en_noisy:
+                    Rn = copy.deepcopy(R_noise[:, :, f])
+                    R_noise[:, :, f] = R_noisy[:, :, f]
+                    R_noisy[:, :, f] = Rn
         
         # R_n = np.zeros((number_of_channels, number_of_channels, number_of_bins), dtype=np.complex64)
         for f in range(0, number_of_bins):
@@ -154,3 +154,4 @@ class complexGMM_mvdr:
         for f in range(0, number_of_bins):
             enhanced_spectrum[:, f] = np.matmul(np.conjugate(beamformer[:, f]).T, complex_spectrum[:, :, f])
         return util.spec2wav(enhanced_spectrum, self.sampling_frequency, self.fft_length, self.fft_length, self.fft_shift)
+
