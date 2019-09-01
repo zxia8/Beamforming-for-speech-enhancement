@@ -45,7 +45,7 @@ def multi_channel_read(list, path):
     wav_multi[:, 3] = wav3
     os.system("echo read done")
 
-    wav_multi_sep = np.split(wav_multi, 200)
+    wav_multi_sep = np.array_split(wav_multi, 200)
     return wav_multi_sep
 
 
@@ -71,6 +71,7 @@ def do_mvdr():
     """
     enhanced_speech = []
     for i in range(len(audio)):
+        os.system("echo " + str(i))
         complex_spectrum, _ = util.get_3dim_spectrum_from_data(audio[i],
         FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
 
@@ -103,10 +104,10 @@ if __name__ == '__main__':
     args from .sh files
     '''
     # INPUT_ARRAYS = "file_name"
-    # SOURCE_PATH = "./../../fsdownload"
+    # SOURCE_PATH = "./../../"
     # CHUNK_PATH = "./../../audio_chunks"
     # ENHANCED_PATH = "./../.."
-    # LINE = 67
+    # LINE = 0
     INPUT_ARRAYS = "./Beamforming-for-speech-enhancement/file_name"
     SOURCE_PATH = "/fastdata/acs18zx/CHiME5/audio"
     ENHANCED_PATH = "/data/acs18zx/new3/kaldi/egs/chime5/s5/enhan"
@@ -129,14 +130,14 @@ if __name__ == '__main__':
     inputli = a[LINE].split()
     folder = inputli.pop(0)
     mic = name2vec(inputli[0])[1].lower()
+    outpath = ENHANCED_PATH + '/' + folder + '_mvdr_' + mic
     outname = str(name2vec(inputli[0])[0] + '_' + name2vec(inputli[0])[1] + '.wav')
-
+    print(outpath + '/' + outname)
     '''
     prepare data for bmf (see comment for multi_channel_read())
     '''
     audio = multi_channel_read(inputli, SOURCE_PATH + '/' + folder)
 
-    outpath = ENHANCED_PATH + '/' + folder + '_mvdr_' + mic
     if not os.path.exists(outpath):
         os.mkdir(outpath)
     os.system("echo data reading done")
