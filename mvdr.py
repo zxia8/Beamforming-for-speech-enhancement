@@ -45,8 +45,8 @@ def multi_channel_read(list, path):
     wav_multi[:, 3] = wav3
     os.system("echo read done")
 
-    wav_multi_sep = np.array_split(wav_multi, 200)
-    return wav_multi_sep
+    # wav_multi_sep = np.array_split(wav_multi, 200)
+    return wav_multi
 
 
 def name2vec(name_string):
@@ -69,23 +69,20 @@ def do_mvdr():
     Doing the simple mvdr algorithm
     :return: no return
     """
-    enhanced_speech = []
-    for i in range(len(audio)):
-        os.system("echo " + str(i))
-        complex_spectrum, _ = util.get_3dim_spectrum_from_data(audio[i],
-        FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
+    complex_spectrum, _ = util.get_3dim_spectrum_from_data(audio,
+    FFT_LENGTH, FFT_SHIFT, FFT_LENGTH)
 
-        mvdr_beamformer = mvdr.minimum_variance_distortioless_response(MIC_ANGLE_VECTOR, MIC_DIAMETER,
-                                                                       sampling_frequency=SAMPLING_FREQUENCY,
-                                                                       fft_length=FFT_LENGTH, fft_shift=FFT_SHIFT)
+    mvdr_beamformer = mvdr.minimum_variance_distortioless_response(MIC_ANGLE_VECTOR, MIC_DIAMETER,
+                                                                   sampling_frequency=SAMPLING_FREQUENCY,
+                                                                   fft_length=FFT_LENGTH, fft_shift=FFT_SHIFT)
 
-        steering_vector = mvdr_beamformer.get_sterring_vector(LOOK_DIRECTION)
+    steering_vector = mvdr_beamformer.get_sterring_vector(LOOK_DIRECTION)
 
-        spatial_correlation_matrix = mvdr_beamformer.get_spatial_correlation_matrix(audio[i])
+    spatial_correlation_matrix = mvdr_beamformer.get_spatial_correlation_matrix(audio)
 
-        beamformer = mvdr_beamformer.get_mvdr_beamformer(steering_vector, spatial_correlation_matrix)
+    beamformer = mvdr_beamformer.get_mvdr_beamformer(steering_vector, spatial_correlation_matrix)
 
-        enhanced_speech.extend(mvdr_beamformer.apply_beamformer(beamformer, complex_spectrum))
+    enhanced_speech = mvdr_beamformer.apply_beamformer(beamformer, complex_spectrum)
 
     wf.write(outpath + '/' + outname,
                  SAMPLING_FREQUENCY, enhanced_speech / np.max(np.abs(enhanced_speech)) * 0.65)
